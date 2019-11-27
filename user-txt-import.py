@@ -6,14 +6,22 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import os
+import sys
 
-cwd = os.getcwd()
 
 # Initialise our faker
 fake = Faker()
 
 # Set number of entries in data set
-n = 5
+if len(sys.argv) >= 2:
+    try:
+        n = int(sys.argv[1])
+        assert n > 0
+        assert type(n) is int
+    except:
+        print("Argv must be positive integer")
+else:
+    n = 1
 
 # create random fake user
 
@@ -34,6 +42,7 @@ for i in range(n):
 # Set up a df wtih the desired columnds
 df = pd.DataFrame(data,columns=['Reference','Last','First','Email','Number'])
 
-path = cwd+'Testdata'+ datetime.now().strftime('%Y-%m-%d %H:%M:%S').replace(" ","")
 # Save df to tab delimited file
-df.to_csv('Testdata-'+ datetime.now().strftime('%Y-%m-%d-T%H-%M-%S')+'.txt', index=False, sep='\t')
+df.to_csv('Testdata-'+ datetime.now().strftime('%Y-%m-%d-T%H-%M-%S')+'.txt',
+    index=False,
+    sep='\t')
