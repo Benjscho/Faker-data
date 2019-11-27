@@ -3,6 +3,11 @@
 
 from faker import Faker
 import pandas as pd
+import numpy as np
+from datetime import datetime
+import os
+
+cwd = os.getcwd()
 
 # Initialise our faker
 fake = Faker()
@@ -25,11 +30,10 @@ data = []
 for i in range(n):
     data.append(new_fake_row())
 
-print(data)
+# print(data)
 # Set up a df wtih the desired columnds
 df = pd.DataFrame(data,columns=['Reference','Last','First','Email','Number'])
 
-
-# Output form, .txt tab delim file of Email, Last, First, Email, Number
-
-print(df)
+path = cwd+'Testdata'+ datetime.now().strftime('%Y-%m-%d %H:%M:%S').replace(" ","")
+# Save df to tab delimited file
+df.to_csv('Testdata-'+ datetime.now().strftime('%Y-%m-%d-T%H-%M-%S')+'.txt', index=False, sep='\t')
